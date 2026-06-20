@@ -63,7 +63,48 @@ public class GoalApp {
 
     // ── Login ─────────────────────────────────────────────────────
     static void showLogin() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        JPanel form = new JPanel(new GridBagLayout());
+        form.setBorder(BorderFactory.createTitledBorder("Sign In"));
 
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(5, 5, 5, 5);
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        JTextField userField = new JTextField(18);
+        JPasswordField passField = new JPasswordField(18);
+        JButton loginBtn = new JButton("Sign In");
+        JButton registerBtn = new JButton("Register");
+        JLabel errLabel = new JLabel(" ");
+
+        c.gridx = 0; c.gridy = 0; form.add(new JLabel("Username:"), c);
+        c.gridx = 1; form.add(userField, c);
+        c.gridx = 0; c.gridy = 1; form.add(new JLabel("Password:"), c);
+        c.gridx = 1; form.add(passField, c);
+        c.gridx = 0; c.gridy = 2; c.gridwidth = 2; form.add(errLabel, c);
+        c.gridy = 3;
+        JPanel btnRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 8, 0));
+        btnRow.add(loginBtn);
+        btnRow.add(registerBtn);
+        form.add(btnRow, c);
+
+        Runnable doLogin = () -> {
+            String u = userField.getText().trim();
+            String p = new String(passField.getPassword());
+            User found = users.stream()
+                    .filter(x -> x.username.equals(u) && x.password.equals(p))
+                    .findFirst().orElse(null);
+            if (found != null) { currentUser = found; showDashboard(); }
+            else errLabel.setText("Incorrect username or password.");
+        };
+
+        loginBtn.addActionListener(e -> doLogin.run());
+        passField.addActionListener(e -> doLogin.run());
+        registerBtn.addActionListener(e -> showRegister());
+
+        panel.add(form);
+        setContent(panel);
+        mainFrame.setTitle("Goal Tracker — Sign In");
     }
 
     // ── Register ──────────────────────────────────────────────────
@@ -116,27 +157,27 @@ public class GoalApp {
 
     // ── Dashboard ─────────────────────────────────────────────────
     static void showDashboard() {
-//        JPanel root = new JPanel(new BorderLayout());
-//
-//        // Top bar
-//        JPanel topBar = new JPanel(new BorderLayout());
-//        topBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-//        topBar.add(new JLabel("Welcome, " + currentUser.username), BorderLayout.WEST);
-//        JButton logoutBtn = new JButton("Sign Out");
-//        logoutBtn.addActionListener(e -> { currentUser = null; showLogin(); });
-//        topBar.add(logoutBtn, BorderLayout.EAST);
-//
-//        // Tabs
-//        JTabbedPane tabs = new JTabbedPane();
-//        tabs.addTab("Goals", goalsPanel());
-//        tabs.addTab("Achievements", achievementsPanel());
-//        tabs.addTab("Dream Goals", dreamGoalsPanel());
-//
-//        root.add(topBar, BorderLayout.NORTH);
-//        root.add(tabs, BorderLayout.CENTER);
-//
-//        setContent(root);
-//        mainFrame.setTitle("Goal Tracker");
+        JPanel root = new JPanel(new BorderLayout());
+
+        // Top bar
+        JPanel topBar = new JPanel(new BorderLayout());
+        topBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        topBar.add(new JLabel("Welcome, " + currentUser.username), BorderLayout.WEST);
+        JButton logoutBtn = new JButton("Sign Out");
+        logoutBtn.addActionListener(e -> { currentUser = null; showLogin(); });
+        topBar.add(logoutBtn, BorderLayout.EAST);
+
+        // Tabs
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.addTab("Goals", goalsPanel());
+        tabs.addTab("Achievements", achievementsPanel());
+        tabs.addTab("Dream Goals", dreamGoalsPanel());
+
+        root.add(topBar, BorderLayout.NORTH);
+        root.add(tabs, BorderLayout.CENTER);
+
+        setContent(root);
+        mainFrame.setTitle("Goal Tracker");
     }
 
     // ── Goals Panel ───────────────────────────────────────────────
