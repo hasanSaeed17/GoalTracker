@@ -116,27 +116,27 @@ public class GoalApp {
 
     // ── Dashboard ─────────────────────────────────────────────────
     static void showDashboard() {
-        JPanel root = new JPanel(new BorderLayout());
-
-        // Top bar
-        JPanel topBar = new JPanel(new BorderLayout());
-        topBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-        topBar.add(new JLabel("Welcome, " + currentUser.username), BorderLayout.WEST);
-        JButton logoutBtn = new JButton("Sign Out");
-        logoutBtn.addActionListener(e -> { currentUser = null; showLogin(); });
-        topBar.add(logoutBtn, BorderLayout.EAST);
-
-        // Tabs
-        JTabbedPane tabs = new JTabbedPane();
-        tabs.addTab("Goals", goalsPanel());
-        tabs.addTab("Achievements", achievementsPanel());
-        tabs.addTab("Dream Goals", dreamGoalsPanel());
-
-        root.add(topBar, BorderLayout.NORTH);
-        root.add(tabs, BorderLayout.CENTER);
-
-        setContent(root);
-        mainFrame.setTitle("Goal Tracker");
+//        JPanel root = new JPanel(new BorderLayout());
+//
+//        // Top bar
+//        JPanel topBar = new JPanel(new BorderLayout());
+//        topBar.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+//        topBar.add(new JLabel("Welcome, " + currentUser.username), BorderLayout.WEST);
+//        JButton logoutBtn = new JButton("Sign Out");
+//        logoutBtn.addActionListener(e -> { currentUser = null; showLogin(); });
+//        topBar.add(logoutBtn, BorderLayout.EAST);
+//
+//        // Tabs
+//        JTabbedPane tabs = new JTabbedPane();
+//        tabs.addTab("Goals", goalsPanel());
+//        tabs.addTab("Achievements", achievementsPanel());
+//        tabs.addTab("Dream Goals", dreamGoalsPanel());
+//
+//        root.add(topBar, BorderLayout.NORTH);
+//        root.add(tabs, BorderLayout.CENTER);
+//
+//        setContent(root);
+//        mainFrame.setTitle("Goal Tracker");
     }
 
     // ── Goals Panel ───────────────────────────────────────────────
